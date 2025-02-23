@@ -49,47 +49,72 @@ export function Conversation() {
     await conversation.endSession();
   }, [conversation]);
 
+  const openDashboard = useCallback(() => {
+    window.open('https://us.posthog.com/embedded/C26s9-2wLHmRJ4WmOd9i9czYefMB-Q?whitelabel&detailed', '_blank', 'noopener,noreferrer');
+  }, []);
+
   return (
-    <div className="flex justify-center items-center gap-x-4">
-      <Card className="rounded-3xl">
-        <CardContent>
-          <CardHeader>
-            <CardTitle className="text-center">
-              {isConnected ? (
-                isSpeaking ? 'Agent is speaking' : 'Agent is listening'
-              ) : (
-                'Disconnected'
-              )}
-            </CardTitle>
-          </CardHeader>
-          <div className="flex flex-col gap-y-4 text-center">
-            <div 
-              className={cn('orb my-16 mx-12',
-                isSpeaking ? 'animate-orb' : (conversation && 'animate-orb-slow'),
-                isConnected ? 'orb-active' : 'orb-inactive'
-              )}
-            />
-            <Button
-              variant="outline"
-              className="rounded-full"
-              size="lg"
-              disabled={conversation !== null && isConnected}
-              onClick={startConversation}
-            >
-              Start conversation
-            </Button>
-            <Button
-              variant="outline"
-              className="rounded-full"
-              size="lg"
-              disabled={conversation === null && !isConnected}
-              onClick={endConversation}
-            >
-              End conversation
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
+    <div className="flex flex-col items-center gap-y-8 w-full">
+      <div className="flex justify-center w-full">
+        <Card className="rounded-3xl">
+          <CardContent>
+            <CardHeader>
+              <CardTitle className="text-center">
+                {isConnected ? (
+                  isSpeaking ? 'Agent is speaking' : 'Agent is listening'
+                ) : (
+                  'Disconnected'
+                )}
+              </CardTitle>
+            </CardHeader>
+            <div className="flex flex-col gap-y-4 text-center">
+              <div 
+                className={cn('orb my-16 mx-12',
+                  isSpeaking ? 'animate-orb' : (conversation && 'animate-orb-slow'),
+                  isConnected ? 'orb-active' : 'orb-inactive'
+                )}
+              />
+              <Button
+                variant="outline"
+                className="rounded-full"
+                size="lg"
+                disabled={conversation !== null && isConnected}
+                onClick={startConversation}
+              >
+                Start conversation
+              </Button>
+              <Button
+                variant="outline"
+                className="rounded-full"
+                size="lg"
+                disabled={conversation === null && !isConnected}
+                onClick={endConversation}
+              >
+                End conversation
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      <div className="w-full flex flex-col gap-y-4">
+        <Button
+          variant="outline"
+          className="rounded-full w-fit mx-auto"
+          size="lg"
+          onClick={openDashboard}
+        >
+          Open Dashboard in New Tab
+        </Button>
+        
+        <iframe 
+          src="https://us.posthog.com/embedded/C26s9-2wLHmRJ4WmOd9i9czYefMB-Q?whitelabel&detailed"
+          width="100%" 
+          height="400" 
+          frameBorder="0"
+          allowFullScreen
+        />
+      </div>
     </div>
   );
 } 
