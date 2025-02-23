@@ -1,4 +1,3 @@
-
 'use client';
 
 import { Button } from "@/components/ui/button";
@@ -29,10 +28,6 @@ export function Conversation() {
         console.log('Setting embedUrl to null');
         setEmbedUrl(null);
         setHasError(false);
-      }
-      // Only check for missing dashboard after AI has responded
-      if (message.source === 'assistant' && !embedUrl) {
-        setHasError(true);
       }
     },
     onError: (error) => console.error('Error:', error),
