@@ -58,8 +58,8 @@ export function Conversation() {
   }, [embedUrl]);
 
   return (
-    <div className="flex flex-col lg:flex-row gap-6 w-full h-[calc(100vh-300px)] min-h-[600px]">
-      <div className="w-full lg:w-[400px] h-full">
+    <div className="flex flex-col lg:flex-row gap-6 w-full min-h-[600px] h-[calc(100vh-300px)]">
+      <div className="w-full lg:w-[400px] h-[600px] lg:h-full shrink-0">
         <Card className="rounded-3xl h-full">
           <CardContent className="h-full flex flex-col justify-between p-6">
             <CardHeader className="p-0">
@@ -106,7 +106,7 @@ export function Conversation() {
       </div>
 
       {embedUrl && (
-        <div className="w-full flex-1 h-full flex flex-col">
+        <div className="w-full flex-1 h-[calc(100vh-300px-600px-1.5rem)] lg:h-full flex flex-col">
           <Button
             variant="outline"
             className="rounded-full w-fit mx-auto mb-4"
