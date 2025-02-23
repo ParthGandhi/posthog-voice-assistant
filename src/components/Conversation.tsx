@@ -1,3 +1,4 @@
+
 'use client';
 
 import { Button } from "@/components/ui/button";
@@ -57,11 +58,11 @@ export function Conversation() {
   }, [embedUrl]);
 
   return (
-    <div className="flex flex-col items-center gap-y-8 w-full">
-      <div className="flex justify-center w-full">
-        <Card className="rounded-3xl">
-          <CardContent>
-            <CardHeader>
+    <div className="flex flex-col lg:flex-row gap-6 w-full h-[calc(100vh-300px)] min-h-[600px]">
+      <div className="w-full lg:w-1/2 h-full">
+        <Card className="rounded-3xl h-full">
+          <CardContent className="h-full flex flex-col justify-between p-6">
+            <CardHeader className="p-0">
               <CardTitle className="text-center">
                 {isConnected ? (
                   isSpeaking ? 'Agent is speaking' : 'Agent is listening'
@@ -70,16 +71,20 @@ export function Conversation() {
                 )}
               </CardTitle>
             </CardHeader>
-            <div className="flex flex-col gap-y-4 text-center">
+            
+            <div className="flex-1 flex items-center justify-center">
               <div 
-                className={cn('orb my-16 mx-12',
+                className={cn('orb',
                   isSpeaking ? 'animate-orb' : (conversation && 'animate-orb-slow'),
                   isConnected ? 'orb-active' : 'orb-inactive'
                 )}
               />
+            </div>
+
+            <div className="flex flex-col gap-4 w-full">
               <Button
                 variant="outline"
-                className="rounded-full"
+                className="rounded-full w-full"
                 size="lg"
                 disabled={conversation !== null && isConnected}
                 onClick={startConversation}
@@ -88,7 +93,7 @@ export function Conversation() {
               </Button>
               <Button
                 variant="outline"
-                className="rounded-full"
+                className="rounded-full w-full"
                 size="lg"
                 disabled={conversation === null && !isConnected}
                 onClick={endConversation}
@@ -101,25 +106,28 @@ export function Conversation() {
       </div>
 
       {embedUrl && (
-        <div className="w-full flex flex-col gap-y-4">
+        <div className="w-full lg:w-1/2 h-full flex flex-col">
           <Button
             variant="outline"
-            className="rounded-full w-fit mx-auto"
+            className="rounded-full w-fit mx-auto mb-4"
             size="lg"
             onClick={openDashboard}
           >
             Open Dashboard in New Tab
           </Button>
           
-          <iframe 
-            src={embedUrl}
-            width="100%" 
-            height="400" 
-            frameBorder="0"
-            allowFullScreen
-          />
+          <div className="flex-1 w-full h-0 rounded-3xl overflow-hidden border border-border">
+            <iframe 
+              src={embedUrl}
+              width="100%" 
+              height="100%" 
+              frameBorder="0"
+              allowFullScreen
+              className="w-full h-full"
+            />
+          </div>
         </div>
       )}
     </div>
   );
-} 
+}
