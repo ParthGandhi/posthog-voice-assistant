@@ -103,7 +103,6 @@
 
 .orb {
   border-radius: 50%;
-  background: linear-gradient(180deg, #BFBFBC 0%, #8E8E8C 100%);
   transition: all 0.3s ease;
 }
 
@@ -112,7 +111,8 @@
 }
 
 .orb-inactive {
-  background: linear-gradient(180deg, #BFBFBC 0%, #8E8E8C 100%);
+  background: #E5E5E5;
+  box-shadow: none;
 }
 
 .shadow-glow {
