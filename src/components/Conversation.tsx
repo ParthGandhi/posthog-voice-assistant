@@ -31,6 +31,12 @@ export function Conversation() {
       await navigator.mediaDevices.getUserMedia({ audio: true });
       await conversation.startSession({
         agentId: 'jpUm5UqpTnR1MFlJHtdV',
+        clientTools: {
+            embed_url_in_display: async ({embed_url}) => {
+              console.log(embed_url);
+              window.open(embed_url, '_blank', 'noopener,noreferrer');
+            }
+          },
       });
     } catch (error) {
       console.error('Failed to start conversation:', error);
