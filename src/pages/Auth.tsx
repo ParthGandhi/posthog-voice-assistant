@@ -11,7 +11,6 @@ const Auth = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [isLogin, setIsLogin] = useState(true);
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -20,9 +19,10 @@ const Auth = () => {
     setLoading(true);
 
     try {
-      const { error } = isLogin
-        ? await supabase.auth.signInWithPassword({ email, password })
-        : await supabase.auth.signUp({ email, password });
+      const { error } = await supabase.auth.signInWithPassword({ 
+        email, 
+        password 
+      });
 
       if (error) {
         toast({
@@ -31,15 +31,7 @@ const Auth = () => {
           description: error.message,
         });
       } else {
-        if (!isLogin) {
-          toast({
-            title: "Success",
-            description: "Account created successfully! You can now log in.",
-          });
-          setIsLogin(true);
-        } else {
-          navigate("/");
-        }
+        navigate("/");
       }
     } catch (error) {
       toast({
@@ -56,7 +48,7 @@ const Auth = () => {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-background to-accent/20">
       <div className="w-full max-w-md p-8 backdrop-blur-sm bg-white/10 rounded-2xl shadow-lg border border-white/20">
         <h2 className="text-2xl font-semibold text-center mb-6">
-          {isLogin ? "Welcome Back" : "Create Account"}
+          Welcome Back
         </h2>
         <form onSubmit={handleAuth} className="space-y-6">
           <div className="space-y-2">
@@ -85,20 +77,9 @@ const Auth = () => {
             className="w-full"
             disabled={loading}
           >
-            {loading ? "Loading..." : isLogin ? "Sign In" : "Sign Up"}
+            {loading ? "Loading..." : "Sign In"}
           </Button>
         </form>
-        <div className="mt-4 text-center">
-          <Button
-            variant="link"
-            onClick={() => setIsLogin(!isLogin)}
-            className="text-sm"
-          >
-            {isLogin
-              ? "Don't have an account? Sign up"
-              : "Already have an account? Sign in"}
-          </Button>
-        </div>
       </div>
     </div>
   );
