@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { useConversation } from '@11labs/react';
 import { useCallback, useState } from 'react';
+import { SearchX } from "lucide-react";
 
 export function Conversation() {
   const [isConnected, setIsConnected] = useState(false);
@@ -116,29 +117,40 @@ export function Conversation() {
         </Card>
       </div>
 
-      {embedUrl && (
-        <div className="w-full flex-1 h-[calc(100vh-300px-600px-1.5rem)] lg:h-full flex flex-col">
-          <div className="flex-1 w-full h-0 rounded-3xl overflow-hidden border border-[#D0D1C9] bg-white/80 backdrop-blur-sm">
-            <iframe 
-              src={embedUrl}
-              width="100%" 
-              height="100%" 
-              frameBorder="0"
-              allowFullScreen
-              className="w-full h-full"
-            />
+      <div className="w-full flex-1 h-[calc(100vh-300px-600px-1.5rem)] lg:h-full flex flex-col">
+        {embedUrl ? (
+          <>
+            <div className="flex-1 w-full h-0 rounded-3xl overflow-hidden border border-[#D0D1C9] bg-white/80 backdrop-blur-sm">
+              <iframe 
+                src={embedUrl}
+                width="100%" 
+                height="100%" 
+                frameBorder="0"
+                allowFullScreen
+                className="w-full h-full"
+              />
+            </div>
+            
+            <Button
+              variant="outline"
+              className="rounded-full w-fit mx-auto mt-4 border-2 border-[#DC9300] text-[#DC9300] hover:bg-[#DC9300] hover:text-white transition-all duration-200"
+              size="lg"
+              onClick={openDashboard}
+            >
+              Open Dashboard in New Tab
+            </Button>
+          </>
+        ) : (
+          <div className="flex-1 w-full rounded-3xl border border-[#D0D1C9] bg-white/80 backdrop-blur-sm flex flex-col items-center justify-center gap-4 p-6">
+            <SearchX className="w-16 h-16 text-[#BFBFBC]" />
+            <h3 className="text-xl font-semibold text-[#151515]/90">No dashboard selected</h3>
+            <p className="text-[#151515]/70 text-center max-w-md">
+              Start a conversation and ask questions about your analytics data. 
+              A relevant dashboard will appear here based on your query.
+            </p>
           </div>
-          
-          <Button
-            variant="outline"
-            className="rounded-full w-fit mx-auto mt-4 border-2 border-[#DC9300] text-[#DC9300] hover:bg-[#DC9300] hover:text-white transition-all duration-200"
-            size="lg"
-            onClick={openDashboard}
-          >
-            Open Dashboard in New Tab
-          </Button>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };
