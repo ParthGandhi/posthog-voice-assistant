@@ -9,7 +9,7 @@ import { useCallback, useState } from 'react';
 export function Conversation() {
   const [isConnected, setIsConnected] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
-  const [embedUrl, setEmbedUrl] = useState<string | null>(null);
+  const [embedUrl, setEmbedUrl] = useState<string | null>("https://us.posthog.com/shared/C26s9-2wLHmRJ4WmOd9i9czYefMB-Q?whitelabel&detailed");
 
   const conversation = useConversation({
     onConnect: () => {
