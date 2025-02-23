@@ -1,3 +1,4 @@
+
 'use client';
 
 import { Button } from "@/components/ui/button";
@@ -12,6 +13,7 @@ export function Conversation() {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [embedUrl, setEmbedUrl] = useState<string | null>(null);
   const [hasError, setHasError] = useState(false);
+  const [isAssistantReplying, setIsAssistantReplying] = useState(false);
 
   const conversation = useConversation({
     onConnect: () => {
@@ -28,6 +30,13 @@ export function Conversation() {
         console.log('Setting embedUrl to null');
         setEmbedUrl(null);
         setHasError(false);
+        setIsAssistantReplying(false);
+      } else if (message.source === 'assistant') {
+        setIsAssistantReplying(true);
+        // If we're still missing an embedUrl after the assistant starts replying, show error
+        if (!embedUrl) {
+          setHasError(true);
+        }
       }
     },
     onError: (error) => console.error('Error:', error),
@@ -45,7 +54,6 @@ export function Conversation() {
           embed_url_in_display: async ({embed_url}) => {
             console.log(embed_url);
             if (!embed_url || embed_url.trim() === '') {
-              setHasError(true);
               setEmbedUrl(null);
             } else {
               setHasError(false);
@@ -64,6 +72,7 @@ export function Conversation() {
     if (!conversation) return;
     await conversation.endSession();
     setHasError(false);
+    setIsAssistantReplying(false);
   }, [conversation]);
 
   const openDashboard = useCallback(() => {
@@ -156,7 +165,7 @@ export function Conversation() {
           </>
         ) : (
           <div className="flex-1 w-full rounded-3xl border border-[#D0D1C9] bg-white/80 backdrop-blur-sm flex flex-col items-center justify-center">
-            {hasError ? (
+            {isAssistantReplying && !embedUrl ? (
               <>
                 <AlertCircle className="w-16 h-16 text-[#F54E00]" />
                 <p className="text-[#151515]/90 mt-4 font-medium">Dashboard cannot be displayed</p>
