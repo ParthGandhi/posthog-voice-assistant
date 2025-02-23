@@ -1,12 +1,11 @@
-
 'use client';
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { useConversation } from '@11labs/react';
+import { AlertCircle, Search } from "lucide-react";
 import { useCallback, useState } from 'react';
-import { Search, AlertCircle } from "lucide-react";
 
 export function Conversation() {
   const [isConnected, setIsConnected] = useState(false);
@@ -23,7 +22,14 @@ export function Conversation() {
       setIsConnected(false);
       setIsSpeaking(false);
     },
-    onMessage: (message) => console.log('Message:', message),
+    onMessage: (message) => {
+      console.log('Message:', message);
+      if (message.source === 'user') {
+        console.log('Setting embedUrl to null');
+        setEmbedUrl(null);
+        setHasError(false);
+      }
+    },
     onError: (error) => console.error('Error:', error),
     onModeChange: ({mode}) => {
       setIsSpeaking(mode === 'speaking');
