@@ -134,10 +134,25 @@
   }
 }
 
+@keyframes pulse-gray {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 30px rgba(200, 200, 200, 0.3);
+  }
+  50% {
+    transform: scale(1.1);
+    box-shadow: 0 0 40px rgba(200, 200, 200, 0.4);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 30px rgba(200, 200, 200, 0.3);
+  }
+}
+
 .animate-orb {
   animation: pulse 1s ease-in-out infinite;
 }
 
 .animate-orb-slow {
-  animation: none;
+  animation: pulse-gray 2s ease-in-out infinite;
 }
