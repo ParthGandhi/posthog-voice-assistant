@@ -6,12 +6,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { useConversation } from '@11labs/react';
 import { useCallback, useState } from 'react';
-import { SearchX } from "lucide-react";
+import { Search, AlertCircle } from "lucide-react";
 
 export function Conversation() {
   const [isConnected, setIsConnected] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [embedUrl, setEmbedUrl] = useState<string | null>(null);
+  const [hasError, setHasError] = useState(false);
 
   const conversation = useConversation({
     onConnect: () => {
@@ -37,7 +38,13 @@ export function Conversation() {
         clientTools: {
           embed_url_in_display: async ({embed_url}) => {
             console.log(embed_url);
-            setEmbedUrl(embed_url);
+            if (!embed_url || embed_url.trim() === '') {
+              setHasError(true);
+              setEmbedUrl(null);
+            } else {
+              setHasError(false);
+              setEmbedUrl(embed_url);
+            }
           }
         },
       });
@@ -50,6 +57,7 @@ export function Conversation() {
   const endConversation = useCallback(async () => {
     if (!conversation) return;
     await conversation.endSession();
+    setHasError(false);
   }, [conversation]);
 
   const openDashboard = useCallback(() => {
@@ -141,13 +149,15 @@ export function Conversation() {
             </Button>
           </>
         ) : (
-          <div className="flex-1 w-full rounded-3xl border border-[#D0D1C9] bg-white/80 backdrop-blur-sm flex flex-col items-center justify-center gap-4 p-6">
-            <SearchX className="w-16 h-16 text-[#BFBFBC]" />
-            <h3 className="text-xl font-semibold text-[#151515]/90">No dashboard selected</h3>
-            <p className="text-[#151515]/70 text-center max-w-md">
-              Start a conversation and ask questions about your analytics data. 
-              A relevant dashboard will appear here based on your query.
-            </p>
+          <div className="flex-1 w-full rounded-3xl border border-[#D0D1C9] bg-white/80 backdrop-blur-sm flex flex-col items-center justify-center">
+            {hasError ? (
+              <>
+                <AlertCircle className="w-16 h-16 text-[#F54E00]" />
+                <p className="text-[#151515]/90 mt-4 font-medium">Dashboard cannot be displayed</p>
+              </>
+            ) : (
+              <Search className="w-16 h-16 text-[#BFBFBC]" />
+            )}
           </div>
         )}
       </div>
