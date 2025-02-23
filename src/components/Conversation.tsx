@@ -118,15 +118,6 @@ export function Conversation() {
 
       {embedUrl && (
         <div className="w-full flex-1 h-[calc(100vh-300px-600px-1.5rem)] lg:h-full flex flex-col">
-          <Button
-            variant="outline"
-            className="rounded-full w-fit mx-auto mb-4 border-2 border-[#DC9300] text-[#DC9300] hover:bg-[#DC9300] hover:text-white transition-all duration-200"
-            size="lg"
-            onClick={openDashboard}
-          >
-            Open Dashboard in New Tab
-          </Button>
-          
           <div className="flex-1 w-full h-0 rounded-3xl overflow-hidden border border-[#D0D1C9] bg-white/80 backdrop-blur-sm">
             <iframe 
               src={embedUrl}
@@ -137,8 +128,17 @@ export function Conversation() {
               className="w-full h-full"
             />
           </div>
+          
+          <Button
+            variant="outline"
+            className="rounded-full w-fit mx-auto mt-4 border-2 border-[#DC9300] text-[#DC9300] hover:bg-[#DC9300] hover:text-white transition-all duration-200"
+            size="lg"
+            onClick={openDashboard}
+          >
+            Open Dashboard in New Tab
+          </Button>
         </div>
       )}
     </div>
   );
-}
+};
