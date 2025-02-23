@@ -25,11 +25,6 @@ export function Conversation() {
     },
     onMessage: (message) => {
       console.log('Message:', message);
-      if (message.source === 'user') {
-        console.log('Setting embedUrl to null');
-        setEmbedUrl(null);
-        setHasError(false);
-      }
     },
     onError: (error) => console.error('Error:', error),
     onModeChange: ({mode}) => {
