@@ -9,6 +9,7 @@ import { useCallback, useState } from 'react';
 export function Conversation() {
   const [isConnected, setIsConnected] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
+  const [embedUrl, setEmbedUrl] = useState<string | null>(null);
 
   const conversation = useConversation({
     onConnect: () => {
@@ -32,11 +33,11 @@ export function Conversation() {
       await conversation.startSession({
         agentId: 'jpUm5UqpTnR1MFlJHtdV',
         clientTools: {
-            embed_url_in_display: async ({embed_url}) => {
-              console.log(embed_url);
-              window.open(embed_url, '_blank', 'noopener,noreferrer');
-            }
-          },
+          embed_url_in_display: async ({embed_url}) => {
+            console.log(embed_url);
+            setEmbedUrl(embed_url);
+          }
+        },
       });
     } catch (error) {
       console.error('Failed to start conversation:', error);
@@ -50,8 +51,10 @@ export function Conversation() {
   }, [conversation]);
 
   const openDashboard = useCallback(() => {
-    window.open('https://us.posthog.com/embedded/C26s9-2wLHmRJ4WmOd9i9czYefMB-Q?whitelabel&detailed', '_blank', 'noopener,noreferrer');
-  }, []);
+    if (embedUrl) {
+      window.open(embedUrl, '_blank', 'noopener,noreferrer');
+    }
+  }, [embedUrl]);
 
   return (
     <div className="flex flex-col items-center gap-y-8 w-full">
@@ -97,24 +100,26 @@ export function Conversation() {
         </Card>
       </div>
 
-      <div className="w-full flex flex-col gap-y-4">
-        <Button
-          variant="outline"
-          className="rounded-full w-fit mx-auto"
-          size="lg"
-          onClick={openDashboard}
-        >
-          Open Dashboard in New Tab
-        </Button>
-        
-        <iframe 
-          src="https://us.posthog.com/embedded/C26s9-2wLHmRJ4WmOd9i9czYefMB-Q?whitelabel&detailed"
-          width="100%" 
-          height="400" 
-          frameBorder="0"
-          allowFullScreen
-        />
-      </div>
+      {embedUrl && (
+        <div className="w-full flex flex-col gap-y-4">
+          <Button
+            variant="outline"
+            className="rounded-full w-fit mx-auto"
+            size="lg"
+            onClick={openDashboard}
+          >
+            Open Dashboard in New Tab
+          </Button>
+          
+          <iframe 
+            src={embedUrl}
+            width="100%" 
+            height="400" 
+            frameBorder="0"
+            allowFullScreen
+          />
+        </div>
+      )}
     </div>
   );
 } 
