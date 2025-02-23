@@ -1,4 +1,3 @@
-import VoiceInterface from '@/components/VoiceInterface';
 import { Conversation } from "@/components/Conversation";
 
 const Index = () => {
