@@ -101,8 +101,6 @@
 }
 
 .orb {
-  width: 160px;
-  height: 160px;
   border-radius: 50%;
   background: linear-gradient(180deg, #5C5C5C 0%, #1F1F1F 100%);
 }

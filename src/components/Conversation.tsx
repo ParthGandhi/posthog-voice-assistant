@@ -59,7 +59,7 @@ export function Conversation() {
 
   return (
     <div className="flex flex-col lg:flex-row gap-6 w-full h-[calc(100vh-300px)] min-h-[600px]">
-      <div className="w-full lg:w-1/2 h-full">
+      <div className="w-full lg:w-[400px] h-full">
         <Card className="rounded-3xl h-full">
           <CardContent className="h-full flex flex-col justify-between p-6">
             <CardHeader className="p-0">
@@ -74,7 +74,7 @@ export function Conversation() {
             
             <div className="flex-1 flex items-center justify-center">
               <div 
-                className={cn('orb',
+                className={cn('orb w-[120px] h-[120px] lg:w-[160px] lg:h-[160px]',
                   isSpeaking ? 'animate-orb' : (conversation && 'animate-orb-slow'),
                   isConnected ? 'orb-active' : 'orb-inactive'
                 )}
@@ -106,7 +106,7 @@ export function Conversation() {
       </div>
 
       {embedUrl && (
-        <div className="w-full lg:w-1/2 h-full flex flex-col">
+        <div className="w-full flex-1 h-full flex flex-col">
           <Button
             variant="outline"
             className="rounded-full w-fit mx-auto mb-4"
