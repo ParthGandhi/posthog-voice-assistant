@@ -58,12 +58,16 @@ export function Conversation() {
   }, [embedUrl]);
 
   return (
-    <div className="flex flex-col lg:flex-row gap-6 w-full h-[calc(100vh-300px)] min-h-[600px]">
-      <div className="w-full lg:w-[400px] h-full">
-        <Card className="rounded-3xl h-full">
+    <div className="flex flex-col lg:flex-row gap-6 w-full min-h-[600px] h-[calc(100vh-300px)]">
+      <div className="w-full lg:w-[400px] h-[600px] lg:h-full shrink-0">
+        <Card className="rounded-3xl h-full border-[#D0D1C9] shadow-lg transition-all duration-200 hover:shadow-xl bg-white/80 backdrop-blur-sm">
           <CardContent className="h-full flex flex-col justify-between p-6">
             <CardHeader className="p-0">
-              <CardTitle className="text-center">
+              <CardTitle className="text-center flex items-center justify-center gap-2 text-[#151515]/90">
+                <div className={cn(
+                  "w-2 h-2 rounded-full transition-colors duration-300",
+                  isConnected ? (isSpeaking ? "bg-[#F54E00]" : "bg-[#1D4AFF]") : "bg-[#BFBFBC]"
+                )} />
                 {isConnected ? (
                   isSpeaking ? 'Agent is speaking' : 'Agent is listening'
                 ) : (
@@ -74,9 +78,10 @@ export function Conversation() {
             
             <div className="flex-1 flex items-center justify-center">
               <div 
-                className={cn('orb w-[120px] h-[120px] lg:w-[160px] lg:h-[160px]',
+                className={cn(
+                  'orb w-[120px] h-[120px] lg:w-[160px] lg:h-[160px] transition-all duration-300',
                   isSpeaking ? 'animate-orb' : (conversation && 'animate-orb-slow'),
-                  isConnected ? 'orb-active' : 'orb-inactive'
+                  isConnected ? 'orb-active shadow-glow' : 'orb-inactive'
                 )}
               />
             </div>
@@ -84,7 +89,10 @@ export function Conversation() {
             <div className="flex flex-col gap-4 w-full">
               <Button
                 variant="outline"
-                className="rounded-full w-full"
+                className={cn(
+                  "rounded-full w-full border-2 transition-all duration-200",
+                  !isConnected && "border-[#1D4AFF] text-[#1D4AFF] hover:bg-[#1D4AFF] hover:text-white"
+                )}
                 size="lg"
                 disabled={conversation !== null && isConnected}
                 onClick={startConversation}
@@ -93,7 +101,10 @@ export function Conversation() {
               </Button>
               <Button
                 variant="outline"
-                className="rounded-full w-full"
+                className={cn(
+                  "rounded-full w-full border-2 transition-all duration-200",
+                  isConnected && "border-[#F54E00] text-[#F54E00] hover:bg-[#F54E00] hover:text-white"
+                )}
                 size="lg"
                 disabled={conversation === null && !isConnected}
                 onClick={endConversation}
@@ -106,17 +117,17 @@ export function Conversation() {
       </div>
 
       {embedUrl && (
-        <div className="w-full flex-1 h-full flex flex-col">
+        <div className="w-full flex-1 h-[calc(100vh-300px-600px-1.5rem)] lg:h-full flex flex-col">
           <Button
             variant="outline"
-            className="rounded-full w-fit mx-auto mb-4"
+            className="rounded-full w-fit mx-auto mb-4 border-2 border-[#DC9300] text-[#DC9300] hover:bg-[#DC9300] hover:text-white transition-all duration-200"
             size="lg"
             onClick={openDashboard}
           >
             Open Dashboard in New Tab
           </Button>
           
-          <div className="flex-1 w-full h-0 rounded-3xl overflow-hidden border border-border">
+          <div className="flex-1 w-full h-0 rounded-3xl overflow-hidden border border-[#D0D1C9] bg-white/80 backdrop-blur-sm">
             <iframe 
               src={embedUrl}
               width="100%" 

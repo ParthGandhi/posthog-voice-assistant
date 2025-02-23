@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -102,26 +103,34 @@
 
 .orb {
   border-radius: 50%;
-  background: linear-gradient(180deg, #5C5C5C 0%, #1F1F1F 100%);
+  background: linear-gradient(180deg, #BFBFBC 0%, #8E8E8C 100%);
+  transition: all 0.3s ease;
 }
 
 .orb-active {
-  background: linear-gradient(180deg, #4B9FFF 0%, #2C5EE0 100%);
+  background: linear-gradient(180deg, #1D4AFF 0%, #0F2980 100%);
 }
 
 .orb-inactive {
-  background: linear-gradient(180deg, #5C5C5C 0%, #1F1F1F 100%);
+  background: linear-gradient(180deg, #BFBFBC 0%, #8E8E8C 100%);
+}
+
+.shadow-glow {
+  box-shadow: 0 0 30px rgba(29, 74, 255, 0.3);
 }
 
 @keyframes pulse {
   0% {
     transform: scale(1);
+    box-shadow: 0 0 30px rgba(29, 74, 255, 0.3);
   }
   50% {
     transform: scale(1.1);
+    box-shadow: 0 0 40px rgba(29, 74, 255, 0.4);
   }
   100% {
     transform: scale(1);
+    box-shadow: 0 0 30px rgba(29, 74, 255, 0.3);
   }
 }
 
