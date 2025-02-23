@@ -42,6 +42,10 @@ const VoiceInterface = () => {
         </Button>
       </div>
       
+      <h1 className="text-4xl font-bold mb-8 bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">
+        Ask your posthog anything
+      </h1>
+      
       <elevenlabs-convai 
         agent-id="GUJNhApgKgFtYc6ZUvgM"
         className="w-full max-w-2xl h-[600px] rounded-lg shadow-lg"
